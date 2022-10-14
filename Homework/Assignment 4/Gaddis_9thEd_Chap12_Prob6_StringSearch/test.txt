@@ -1,0 +1,3 @@
+It is a c++ programming class. Now reading on chapter 12 which is called advanced file operation.
+This is a great programming class.
+I love to play with programming language.

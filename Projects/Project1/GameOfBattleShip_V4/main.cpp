@@ -22,25 +22,25 @@ using namespace std;//Standard Name-space under which System Libraries reside
 const int ROWS = 10;                                          // Constant rows for 10x10 matrix
 const int COLS = 10;                                          // Constant column for 10x10 matrix
 //Structure declaration
-struct battleShip {                                           // Declare a structure for different types battle ship 
+struct BattleShip {                                           // Declare a structure for different types battle ship 
     int aircraft[5][2];                                       // Aircraft length is 5 for tracking its coordinate values (row,col)
     int battleship[4][2];                                     // Battleship length is 4 for tracking its coordinate values (row,col)
     int destroyer[3][2];                                      // Destroyer length is 3 for tracking its coordinate values (row,col)
     int corvette[2][2];                                       // Corvette length is 2 for tracking its coordinate values (row,col)     
 };
-enum yCoord { A, B, C, D, E, F, G, H, I, J };                 // Take a enum type for calculating the y coordinate position
+enum YCoord { A, B, C, D, E, F, G, H, I, J };                 // Take a enum type for calculating the y coordinate position
 //Function Prototypes
 void gameRules(); //Display the game rules
 void gameHead(string); //Display player name
 char** getMatrixData(int, int); // Fill the computer or player matrix grid (10x10) with '*' character
 int letterToRowNumber(char); //Determine the letter (A,...J) value to integer y-axis value (0,1,2...9) using enum identifier 
 void drawPlayerArea(const char* const*, int, int); //Display player matrix
-battleShip setYourBattleShip(char**, string); //Set player ship position and return structure
-battleShip setComputerBattleShip(char**); //set computer ship position
+BattleShip setYourBattleShip(char**, string); //Set player ship position and return structure
+BattleShip setComputerBattleShip(char**); //set computer ship position
 bool conflictWithOtherShip(char**, int, int, int, char); //Check the ship position conflict with other ship or not
 void showPlayZone(char**, char**); // Draw the computer and player zone
-void startPlay(char**, char**, battleShip*); // Allow the player and computer for attack the ships 
-bool checkSuccessful(char**, battleShip*, int, int);  // Check where the attack is successful or not
+void startPlay(char**, char**, BattleShip*); // Allow the player and computer for attack the ships 
+bool checkSuccessful(char**, BattleShip*, int, int);  // Check where the attack is successful or not
 void destroy(char**, int, int); //De-allocate memory    
 
 //Execution begins here!
@@ -52,7 +52,7 @@ int main() {
     const int NUM_PLAYERS = 2;                                  // Number of player
     const int NAME_SIZE = 100;                                  // Set the maximum length of the name
     char playerName[NAME_SIZE];                                 // Declare the input array to take player name
-    battleShip bsPlayer[NUM_PLAYERS];                           // Array of structure 
+    BattleShip bsPlayer[NUM_PLAYERS];                           // Array of structure 
     char** pcMatrix;                                            // Pointer to the number
     char** playerMatrix;                                        // Point to the number
 
@@ -176,7 +176,7 @@ void drawPlayerArea(const char* const* matrixData, const int rows, const int col
 //Definition of function setYourBattleShip                        *
 //Set player ship position and return structure                   *
 //*****************************************************************
-battleShip setYourBattleShip(char** playerMatrix, string playerName) {
+BattleShip setYourBattleShip(char** playerMatrix, string playerName) {
 
     const int AIRCRAFT_LENGTH = 5;                      // Unit length of the aircraft 
     const int BATTLESHIP_LENGTH = 4;                    // Unit length of the battleship 
@@ -186,7 +186,7 @@ battleShip setYourBattleShip(char** playerMatrix, string playerName) {
     char shipOrientiation;                              // Take the input for ship orientation (h or v)                              
     string shipPosition = "";                           // Take the input for ship starting position (a0, a2...j9 so on) 
 
-    battleShip playerShipPosition = {};       // Declare a battleship structure to store player ship position 
+    BattleShip playerShipPosition;                 // Declare a battleship structure variable to store player ship position 
     while (true)                                        // Loop for setup the aircraft position    
     {
         cout << "Setup your aircraft carrier location" << endl;
@@ -313,7 +313,7 @@ battleShip setYourBattleShip(char** playerMatrix, string playerName) {
                 shipPosition.clear();
                 continue;
             }
-            //cin.ignore();
+            
         }
 
         if (tolower(shipOrientiation) == 'h')                               // check for horizontal setup
@@ -405,7 +405,7 @@ battleShip setYourBattleShip(char** playerMatrix, string playerName) {
                 shipPosition.clear();
                 continue;
             }
-            //cin.ignore();
+            
         }
 
         if (tolower(shipOrientiation) == 'h')                               // check for horizontal setup
@@ -562,13 +562,13 @@ battleShip setYourBattleShip(char** playerMatrix, string playerName) {
 //Definition of function setComputerBattleShip                        *
 //Set computer ship position and return structure                   *
 //*****************************************************************
-battleShip setComputerBattleShip(char** computerMatrix) {
+BattleShip setComputerBattleShip(char** computerMatrix) {
     const int AIRCRAFT_LENGTH = 5;                      // Unit length of the aircraft 
     const int BATTLESHIP_LENGTH = 4;                    // Unit length of the battleship 
     const int DESTROYER_LENGTH = 3;                     // Unit length of the destroyer
     const int CORVETTE_LENGTH = 2;                      // Unit length of the corvette
     
-    battleShip computerShipPosition = battleShip();                    // Declare a structure variable to store computer ship position
+    BattleShip computerShipPosition = BattleShip();                    // Declare a structure variable to store computer ship position
     //setup aircraft
     int rowPosition = rand() % 2 + 2;                       // Randomly select a row position from 2-3  
     int colPosition = rand() % 2 + 2;                       // Randomly select a column position from 2-3
@@ -578,7 +578,7 @@ battleShip setComputerBattleShip(char** computerMatrix) {
         int counter = 0;
         for (int i = colPosition; i < colPosition + AIRCRAFT_LENGTH; i++)
         {
-            computerMatrix[rowPosition][i] = 'A';                          // Set the computer matrix with 'A' for indicationg the aircraft location
+            computerMatrix[rowPosition][i] = 'A';                          // Set the computer matrix with 'A' for indicating the aircraft location
             computerShipPosition.aircraft[counter][0] = rowPosition;       // Insert the ship position values in the structure variable
             computerShipPosition.aircraft[counter][1] = i;                 // Insert the column position 
             counter++;                                                     // Increase the counter one
@@ -774,7 +774,7 @@ void showPlayZone(char** playerMatrix, char** pcMatrix) {
 //Definition of function startPlay                    *
 //This function allow to input player and computer attack position each other   *
 //*****************************************************************
-void startPlay(char** playerMatrix, char** pcMatrix, battleShip* battleShipInfo)
+void startPlay(char** playerMatrix, char** pcMatrix, BattleShip* battleShipInfo)
 {
     const int POSITION_LENGTH = 2;
     int rowPosition;
@@ -831,7 +831,7 @@ void startPlay(char** playerMatrix, char** pcMatrix, battleShip* battleShipInfo)
 //This function check the attack is successful or not and         *
 //Update the ship position structure                              *
 //*****************************************************************
-bool checkSuccessful(char** playerMatrix, battleShip *shipPosition, int row, int col) 
+bool checkSuccessful(char** playerMatrix, BattleShip *shipPosition, int row, int col) 
 {
     return false;                                                       // Full body will be the next version
 }

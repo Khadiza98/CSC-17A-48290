@@ -180,11 +180,13 @@ Stats *stat(const Array *array){
     }
     //average of the array
     stats->avg = 0;
-    float total = 0.0f; //to hold the summation of the elements of array
-    for (int i = 0; i < array->size; i++) {
-        total += array->data[i];
+    float total; //to hold the summation of the elements of array
+    if (array->size > 0) {
+        for (int i = 0; i < array->size; i++) {
+            total += array->data[i];
+        }
+            stats->avg = (total / array->size); //calculate the average of the array and store to the structure member
     }
-    stats->avg = (total / array->size); //calculate the average of the array and store to the structure member
     
    //find the median of the array
     stats->median=0;                      //hold median

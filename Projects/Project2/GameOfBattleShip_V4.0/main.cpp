@@ -29,7 +29,7 @@ using namespace std;//Standard Name-space under which System Libraries reside
 void gameRules();   //display the game rules
 
 //Execution begins here!
-int main() {
+int main(int argc, char** argv) {
     //declare variables
     char choice;       // take input for checking the start play or game rules
     const int NUM_PLAYERS = 2; // Number of player

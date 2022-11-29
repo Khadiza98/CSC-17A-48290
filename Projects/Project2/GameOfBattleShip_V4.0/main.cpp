@@ -36,8 +36,8 @@ int main(int argc, char** argv) {
     BShipSetUp bsPlayer[NUM_PLAYERS];// Array of class BShipSetUp
     string playerName;   //To hold the player name
     bool sGame;         // To track do while-loop for menu
-    
-    
+    bool tryAgain = true; //Flag to reread the input name
+
     
     //Output the game statistics or menu to the screen
     do {
@@ -59,25 +59,33 @@ int main(int argc, char** argv) {
     cin.ignore(); //To ignore one or more characters from the input buffer
     cout << "\t Please enter your name: "; //Ask user to enter name
     getline(cin, playerName); // Take the player name
-    try {
-        //create an object of BShipSetUp class and using constructor to initialize member
+    
+    while(tryAgain) {
+        try {
+        //create an object of BShipSetUp class and using constructor 
+        //to initialize member
         BShipSetUp bSetUp(playerName); 
         //Display player information
         bSetUp.gameHead();     
         //Display player matrix
         bSetUp.drawPlayerArea(bSetUp.getMatrixData());
-        //Set player ship position and return structure
+         //Set player ship position and return structure
         bsPlayer[0] = bSetUp.setYourBattleShip(bSetUp);
         //Set computer ship position and return structure
         bsPlayer[1] = bSetUp.setComputerBattleShip(bSetUp);
         bSetUp.gameHead();  
         bSetUp.showPlayZone();
         bSetUp.startPlay(bsPlayer[0], bsPlayer[1]);
-        
-    } catch(BShipSetUp::InvalidName) {
-        cout << "\t Error: invalid input -> [" << playerName 
-             << "] entered for the Player Name!!" << endl;
-    }
+        tryAgain = false;
+        }  //End try
+        catch(BShipSetUp::InvalidName) {
+            cout << "\t Error: invalid input -> [" << playerName 
+                 << "] entered for the Player Name!!" << endl;
+            cout << "\t Please enter a valid name: ";
+            getline(cin, playerName); // Take the player name
+
+        } //End catch
+    } //End while-loop
     
     //Exit the program
     return 0;

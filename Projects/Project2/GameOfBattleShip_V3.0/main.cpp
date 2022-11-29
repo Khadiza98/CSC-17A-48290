@@ -27,13 +27,14 @@ using namespace std;//Standard Name-space under which System Libraries reside
 void gameRules();   //display the game rules
 
 //Execution begins here!
-int main() {
+int main(int argc, char** argv) {
     //declare variables
     char choice;       // take input for checking the start play or game rules
     const int NUM_PLAYERS = 2; // Number of player
     BShipSetUp bsPlayer[NUM_PLAYERS];// Array of class BShipSetUp
     string playerName;   //To hold the player name
     bool sGame;         // To track do while-loop for menu
+    bool tryAgain = true; //Flag to reread the input name
     
     
     //Output the game statistics or menu to the screen
@@ -56,8 +57,10 @@ int main() {
     cin.ignore(); //To ignore one or more characters from the input buffer
     cout << "\t Please enter your name: "; //Ask user to enter name
     getline(cin, playerName); // Take the player name
-    try {
-        //create an object of BShipSetUp class and using constructor to initialize member
+    while(tryAgain) {
+        try {
+        //create an object of BShipSetUp class and using constructor 
+        //to initialize member
         BShipSetUp bSetUp(playerName); 
         //Display player information
         bSetUp.gameHead();     
@@ -67,11 +70,16 @@ int main() {
         bsPlayer[0] = bSetUp.setYourBattleShip(bSetUp);
         //Set computer ship position and return structure
         bsPlayer[1] = bSetUp.setComputerBattleShip(bSetUp);
-        
-    } catch(BShipSetUp::InvalidName) {
-        cout << "\t Error: invalid input -> [" << playerName 
-             << "] entered for the Player Name!!" << endl;
-    }
+        tryAgain = false;
+        }  //End try
+        catch(BShipSetUp::InvalidName) {
+            cout << "\t Error: invalid input -> [" << playerName 
+                 << "] entered for the Player Name!!" << endl;
+            cout << "\t Please enter a valid name: ";
+            getline(cin, playerName); // Take the player name
+
+        } //End catch
+    } //End while-loop
     
     //Exit the program
     return 0;

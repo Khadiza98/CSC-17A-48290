@@ -3,7 +3,7 @@
  * Author: Khadiza Akter
  * Created on November 26, 2022, 5:33 AM
  * Purpose: Game of BattleShip
- *          Fill 2-D pointer with '*' 
+ *          Fill 2-D vector with '*' 
  *          Apply the Rules of Battleship
  *          Set up player battleship
  *          Set up computer battleship
@@ -19,9 +19,9 @@
  */
 //System Level Libraries
 #include <iostream> //Input-output library
-#include<string>
+#include <string>   //Strings
 #include <cstdlib>  //Srand to set the seed or system()
-
+#include <ctime>    //Set for time()
 using namespace std;//Standard Name-space under which System Libraries reside
 
 //User defined libraries
@@ -32,6 +32,8 @@ void gameRules();   //display the game rules
 
 //Execution begins here!
 int main(int argc, char** argv) {
+    //Random seed here
+    srand(static_cast<unsigned int>(time(0)));
     //Declare variables
     char choice;       // take input for checking the start play or game rules
     const int NUM_PLAYERS = 2; // Number of player

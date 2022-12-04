@@ -12,8 +12,8 @@
  //System Level Libraries
 #include <iostream> //Input-output library
 #include <cstdlib>  //Srand to set the seed or system()
-#include <ctime> //set for time()
-#include <string>
+#include <ctime>    //set for time()
+#include <string>   //Strings
 using namespace std;//Standard Name-space under which System Libraries reside
 
 //User defined libraries
@@ -24,8 +24,10 @@ using namespace std;//Standard Name-space under which System Libraries reside
 void gameRules();   //display the game rules
 
 //Execution begins here!
-int main() {
-    //declare variables
+int main(int argc, char** argv) {
+    //Random seed here
+    srand(static_cast<unsigned int>(time(0)));
+    //Declare variables
     char choice;       // take input for checking the start play or game rules
     const int NUM_PLAYERS = 2; // Number of player
     char** pcMatrix;     // point to the computer matrix grid

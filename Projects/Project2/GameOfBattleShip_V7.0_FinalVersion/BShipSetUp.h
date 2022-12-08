@@ -1,5 +1,5 @@
 /* 
- * File:   BShipSetUp.cpp
+ * File:   BShipSetUp.h
  * Author: Khadiza Akter
  * Created on December 5, 2022, 6:50 PM
  * Purpose: Specification file of derived BShipSetUp class from both BattleShip

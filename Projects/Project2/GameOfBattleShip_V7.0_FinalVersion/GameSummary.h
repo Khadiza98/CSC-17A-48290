@@ -1,5 +1,5 @@
 /* 
- * File:   GameSummary.cpp
+ * File:   GameSummary.h
  * Author: Khadiza Akter
  * Created on December 5, 2022, 7:11 PM
  * Purpose: Specification file of GameSummary class

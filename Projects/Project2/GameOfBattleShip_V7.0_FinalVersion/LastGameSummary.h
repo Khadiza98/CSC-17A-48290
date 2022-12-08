@@ -1,5 +1,5 @@
 /* 
- * File:   LastGameSummary.cpp
+ * File:   LastGameSummary.h
  * Author: Khadiza Akter
  * Created on December 5, 2022, 7:19 PM
  * Purpose: Specification file of LastGameSummary class
